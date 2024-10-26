@@ -1,6 +1,6 @@
-# ShopClone
+# Vite React Shadcn Demo
 
-ShopClone is a React-based e-commerce application built with Vite, TypeScript, and Tailwind CSS.
+Vite React Shadcn Demo is a React-based application built with Vite, TypeScript, ShadCN UI, and Tailwind CSS.
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ Before you begin, ensure you have the following installed on your system:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/shopclone.git
-   cd shopclone
+   git clone https://github.com/VoloBuilds/vite-react-shadcn-demo.git
+   cd vite-react-shadcn-demo
    ```
 
 2. Install the dependencies:
@@ -74,3 +74,8 @@ The main application code is located in the `src` directory:
 - `eslint.config.js`: ESLint configuration
 
 For more details on the project setup and configuration, refer to the respective configuration files in the project root.
+
+If starting a project from scratch, see this guide on how to use shadcn/ui with vite here: https://ui.shadcn.com/docs/installation/vite
+
+Also see the Cursor tutorial relating to this project here:
+https://youtu.be/PlQPSkIUdIk
