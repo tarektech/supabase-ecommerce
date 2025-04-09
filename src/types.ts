@@ -59,6 +59,7 @@ export interface ProfileType {
   profile_id: string;
   username?: string;
   avatar_url?: string;
+  email?: string;
   created_at: string;
 }
 

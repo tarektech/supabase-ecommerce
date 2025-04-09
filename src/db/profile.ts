@@ -11,7 +11,7 @@ interface ProfileResponse {
 export async function getProfile(userId: string): Promise<ProfileResponse> {
   const { data, error } = await supabase
     .from('profiles')
-    .select('profile_id, username, avatar_url, created_at')
+    .select('profile_id, username, avatar_url, email, created_at')
     .eq('profile_id', userId)
     .single();
 
@@ -29,9 +29,10 @@ export async function createProfile(userId: string): Promise<ProfileResponse> {
         profile_id: userId,
         username: '',
         avatar_url: '',
+        email: '',
         created_at: now,
       })
-      .select('profile_id, username, avatar_url, created_at')
+      .select('profile_id, username, avatar_url, email, created_at')
       .single();
 
     // If there's an error, check if it's an RLS policy violation
@@ -63,13 +64,13 @@ export async function createProfile(userId: string): Promise<ProfileResponse> {
 
 export async function updateProfile(
   userId: string,
-  updates: Partial<Pick<ProfileType, 'username' | 'avatar_url'>>
+  updates: Partial<Pick<ProfileType, 'username' | 'avatar_url' | 'email'>>
 ): Promise<ProfileResponse> {
   const { data, error } = await supabase
     .from('profiles')
     .update(updates)
     .eq('profile_id', userId)
-    .select('profile_id, username, avatar_url, created_at')
+    .select('profile_id, username, avatar_url, email, created_at')
     .single();
 
   if (error) {

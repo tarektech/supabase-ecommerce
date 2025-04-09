@@ -13,11 +13,13 @@ import { useNavigate } from 'react-router-dom';
 interface ProfileData {
   username: string;
   avatarUrl: string;
+  email: string;
   createdAt: string | null;
   orders: OrderType[];
   loading: boolean;
   isSaving: boolean;
   setUsername: (username: string) => void;
+  setEmail: (email: string) => void;
   setAvatarUrl: (url: string) => void;
   saveProfile: () => Promise<void>;
 }
@@ -26,6 +28,7 @@ export function useProfile(user: User | null): ProfileData {
   const [orders, setOrders] = useState<OrderType[]>([]);
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [createdAt, setCreatedAt] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -74,6 +77,7 @@ export function useProfile(user: User | null): ProfileData {
             }
           } else if (newProfile) {
             setUsername(newProfile.username || '');
+            setEmail(newProfile.email || '');
             setAvatarUrl(newProfile.avatar_url || '');
             setCreatedAt(newProfile.created_at);
           }
@@ -81,6 +85,7 @@ export function useProfile(user: User | null): ProfileData {
           handleCommonErrors(profileError, { context: 'fetching profile' });
         } else if (profile) {
           setUsername(profile.username || '');
+          setEmail(profile.email || '');
           setAvatarUrl(profile.avatar_url || '');
           setCreatedAt(profile.created_at);
         }
@@ -117,6 +122,7 @@ export function useProfile(user: User | null): ProfileData {
       setIsSaving(true);
       const { error } = await updateProfile(user.id, {
         username,
+        email,
         avatar_url: avatarUrl,
       });
 
@@ -135,11 +141,13 @@ export function useProfile(user: User | null): ProfileData {
   return {
     username,
     avatarUrl,
+    email,
     createdAt,
     orders,
     loading,
     isSaving,
     setUsername,
+    setEmail,
     setAvatarUrl,
     saveProfile,
   };

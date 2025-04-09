@@ -10,6 +10,8 @@ interface ProfileCardProps {
   setUsername: (value: string) => void;
   avatarUrl: string;
   setAvatarUrl: (value: string) => void;
+  email: string;
+  setEmail: (value: string) => void;
   createdAt: string | null;
   isSaving: boolean;
   onSaveProfile: () => void;
@@ -22,6 +24,8 @@ export function ProfileCard({
   setUsername,
   avatarUrl,
   setAvatarUrl,
+  email,
+  setEmail,
   createdAt,
   isSaving,
   onSaveProfile,
@@ -59,6 +63,17 @@ export function ProfileCard({
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                type="email"
               />
             </div>
 

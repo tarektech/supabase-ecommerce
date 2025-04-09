@@ -18,6 +18,8 @@ export default function ProfilePage() {
     setUsername,
     avatarUrl,
     setAvatarUrl,
+    email,
+    setEmail,
     createdAt,
     orders,
     loading,
@@ -53,6 +55,8 @@ export default function ProfilePage() {
         setUsername={setUsername}
         avatarUrl={avatarUrl}
         setAvatarUrl={setAvatarUrl}
+        email={email}
+        setEmail={setEmail}
         createdAt={createdAt}
         isSaving={isSaving}
         onSaveProfile={saveProfile}

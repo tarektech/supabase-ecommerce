@@ -51,6 +51,7 @@ Reviews ────┐          │
 |--------------|--------------|----------|-------------|-------------------------------|
 | profile_id   | UUID         | NO       | auth.uid()  | Primary key                   |
 | username     | TEXT         | YES      | NULL        | User's display name           |
+| email        | VARCHAR(255) | YES      | ''          | User's profile email          |
 | avatar_url   | TEXT         | YES      | NULL        | URL to user's avatar image    |
 | created_at   | TIMESTAMPTZ  | NO       | now()       | When the profile was created  |
 
@@ -132,15 +133,16 @@ An ENUM type with the following values:
 
 ## Foreign Key Relationships
 
-1. `addresses.user_id` → `profiles.profile_id` (Many-to-One)
-2. `orders.user_id` → `profiles.profile_id` (Many-to-One)
-3. `orders.shipping_address_id` → `addresses.id` (Many-to-One)
-4. `order_items.order_id` → `orders.id` (Many-to-One, CASCADE on delete)
-5. `order_items.product_id` → `products.product_id` (Many-to-One, RESTRICT on delete)
-6. `reviews.user_id` → `profiles.profile_id` (Many-to-One)
-7. `reviews.product_id` → `products.product_id` (Many-to-One, CASCADE on delete)
-8. `products.category_id` → `categories.id` (Many-to-One, SET NULL on delete)
-9. `categories.parent_id` → `categories.id` (Self-referencing, SET NULL on delete)
+1. `profiles.profile_id` → `auth.users.id` (One-to-One)
+2. `addresses.user_id` → `profiles.profile_id` (Many-to-One)
+3. `orders.user_id` → `profiles.profile_id` (Many-to-One)
+4. `orders.shipping_address_id` → `addresses.id` (Many-to-One)
+5. `order_items.order_id` → `orders.id` (Many-to-One, CASCADE on delete)
+6. `order_items.product_id` → `products.product_id` (Many-to-One, RESTRICT on delete)
+7. `reviews.user_id` → `profiles.profile_id` (Many-to-One)
+8. `reviews.product_id` → `products.product_id` (Many-to-One, CASCADE on delete)
+9. `products.category_id` → `categories.id` (Many-to-One, SET NULL on delete)
+10. `categories.parent_id` → `categories.id` (Self-referencing, SET NULL on delete)
 
 ## Indexes
 
@@ -151,6 +153,7 @@ An ENUM type with the following values:
 - `idx_reviews_product`: Index on `reviews.product_id`
 - `idx_reviews_user`: Index on `reviews.user_id`
 - `idx_addresses_user`: Index on `addresses.user_id`
+- `idx_profiles_email`: Index on `profiles.email`
 
 ## Common Queries
 

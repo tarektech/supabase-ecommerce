@@ -32,7 +32,7 @@ Authentication is managed through Supabase Auth, which provides JWT tokens for a
 #### Get Profile
 - **Function**: `getProfile(userId)`
 - **Description**: Retrieves a user's profile
-- **Returns**: Profile data including username, avatar URL, and creation date
+- **Returns**: Profile data including username, email, avatar URL, and creation date
 - **Access Control**: Users can only access their own profiles
 
 #### Create Profile
@@ -41,15 +41,20 @@ Authentication is managed through Supabase Auth, which provides JWT tokens for a
 - **Returns**: The newly created profile data
 - **Access Control**: Users can only create their own profiles
 - **Note**: Usually handled automatically during sign-up
+- **Default Values**:
+  - username: empty string
+  - email: empty string
+  - avatar_url: empty string
 
 #### Update Profile
 - **Function**: `updateProfile(userId, updates)`
 - **Description**: Updates a user's profile
 - **Parameters**:
   - `userId`: The user's ID
-  - `updates`: Object containing `username` and/or `avatar_url`
+  - `updates`: Object containing `username`, `email`, and/or `avatar_url`
 - **Returns**: Updated profile data
 - **Access Control**: Users can only update their own profiles
+- **Validation**: Email updates must match the user's verified email in auth.users
 
 ## Address Management
 
@@ -179,7 +184,16 @@ All API functions use a consistent error handling approach:
 2. Auth system creates user in auth.users table
 3. `ensureUserProfile` is called to create entry in profiles table
 4. RLS policy validates that user can only create their own profile
-5. Profile is created and returned to the client
+5. Profile is created with default values (empty strings for username, email, and avatar_url)
+6. Profile is returned to the client
+
+### Profile Update Flow
+
+1. User updates their profile information
+2. `updateProfile` is called with user ID and update data
+3. RLS policy validates that user can only update their own profile
+4. If email is being updated, it must match their auth.users email
+5. Profile is updated and returned to the client
 
 ### Order Creation Flow
 
